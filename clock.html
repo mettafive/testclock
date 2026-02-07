@@ -17,7 +17,49 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+            overflow: hidden;
+            cursor: none;
+        }
+
+        #stars-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .cursor-glow {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(147, 197, 253, 0.4) 50%, transparent 70%);
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s;
+        }
+
+        .cursor-trail {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(147, 197, 253, 0.6) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 9998;
+            animation: fadeOut 0.6s forwards;
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                transform: scale(0.5);
+            }
         }
 
         .grid {
@@ -27,14 +69,23 @@
             padding: 2rem;
             max-width: 800px;
             width: 100%;
+            position: relative;
+            z-index: 1;
         }
 
         .clock-container {
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
             padding: 2rem 2.5rem;
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
             text-align: center;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .clock-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 70px rgba(147, 197, 253, 0.3);
         }
 
         h2 {
@@ -118,6 +169,8 @@
     </style>
 </head>
 <body>
+    <canvas id="stars-canvas"></canvas>
+    <div class="cursor-glow" id="cursor-glow"></div>
     <div class="grid">
         <div class="clock-container" data-tz="America/New_York" data-locale="en-US" data-label="New York" data-flag="🇺🇸" data-abbr="EST/EDT" data-lat="40.7128" data-lon="-74.0060">
             <h2>🇺🇸 New York</h2>
@@ -305,6 +358,85 @@
 
         updateWeather();
         setInterval(updateWeather, 600000); // Update weather every 10 minutes
+
+        // Starry night background
+        const canvas = document.getElementById('stars-canvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const stars = [];
+        const starCount = 200;
+
+        for (let i = 0; i < starCount; i++) {
+            stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 1.5,
+                alpha: Math.random(),
+                twinkleSpeed: Math.random() * 0.02 + 0.01
+            });
+        }
+
+        function animateStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            stars.forEach(star => {
+                star.alpha += star.twinkleSpeed;
+                if (star.alpha > 1 || star.alpha < 0.3) {
+                    star.twinkleSpeed = -star.twinkleSpeed;
+                }
+
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`;
+                ctx.fill();
+            });
+
+            requestAnimationFrame(animateStars);
+        }
+
+        animateStars();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Cursor glow effect
+        const cursorGlow = document.getElementById('cursor-glow');
+        let mouseX = 0;
+        let mouseY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+
+            cursorGlow.style.left = mouseX + 'px';
+            cursorGlow.style.top = mouseY + 'px';
+
+            // Create trail particles
+            if (Math.random() > 0.7) {
+                const trail = document.createElement('div');
+                trail.className = 'cursor-trail';
+                trail.style.left = mouseX + 'px';
+                trail.style.top = mouseY + 'px';
+                document.body.appendChild(trail);
+
+                setTimeout(() => trail.remove(), 600);
+            }
+        });
+
+        document.addEventListener('mousedown', () => {
+            cursorGlow.style.width = '30px';
+            cursorGlow.style.height = '30px';
+        });
+
+        document.addEventListener('mouseup', () => {
+            cursorGlow.style.width = '20px';
+            cursorGlow.style.height = '20px';
+        });
     </script>
 </body>
 </html>

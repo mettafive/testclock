@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Clocks</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .clock-container {
+            background: white;
+            padding: 2rem 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 0.75rem;
+            font-size: 1.4rem;
+        }
+
+        .time {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #667eea;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 0.05em;
+        }
+
+        .date {
+            font-size: 1rem;
+            color: #666;
+            margin-top: 0.75rem;
+        }
+
+        .timezone {
+            font-size: 0.85rem;
+            color: #999;
+            margin-top: 0.4rem;
+        }
+
+        .weather {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .weather-icon {
+            font-size: 2rem;
+        }
+
+        .temperature {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .sun-times {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: space-around;
+            gap: 1rem;
+        }
+
+        .sun-time {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .sun-label {
+            font-size: 0.75rem;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .sun-value {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        @media (max-width: 600px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid">
+        <div class="clock-container" data-tz="America/New_York" data-locale="en-US" data-label="New York" data-flag="🇺🇸" data-abbr="EST/EDT" data-lat="40.7128" data-lon="-74.0060">
+            <h2>🇺🇸 New York</h2>
+            <div class="time">--:--:--</div>
+            <div class="date">--</div>
+            <div class="timezone">EST / EDT</div>
+            <div class="weather">
+                <span class="weather-icon">--</span>
+                <span class="temperature">--°C</span>
+            </div>
+            <div class="sun-times">
+                <div class="sun-time">
+                    <span class="sun-label">Sunrise</span>
+                    <span class="sun-value sunrise">--</span>
+                </div>
+                <div class="sun-time">
+                    <span class="sun-label">Sunset</span>
+                    <span class="sun-value sunset">--</span>
+                </div>
+            </div>
+        </div>
+        <div class="clock-container" data-tz="Europe/London" data-locale="en-GB" data-label="London" data-flag="🇬🇧" data-abbr="GMT/BST" data-lat="51.5074" data-lon="-0.1278">
+            <h2>🇬🇧 London</h2>
+            <div class="time">--:--:--</div>
+            <div class="date">--</div>
+            <div class="timezone">GMT / BST</div>
+            <div class="weather">
+                <span class="weather-icon">--</span>
+                <span class="temperature">--°C</span>
+            </div>
+            <div class="sun-times">
+                <div class="sun-time">
+                    <span class="sun-label">Sunrise</span>
+                    <span class="sun-value sunrise">--</span>
+                </div>
+                <div class="sun-time">
+                    <span class="sun-label">Sunset</span>
+                    <span class="sun-value sunset">--</span>
+                </div>
+            </div>
+        </div>
+        <div class="clock-container" data-tz="Europe/Stockholm" data-locale="sv-SE" data-label="Stockholm" data-flag="🇸🇪" data-abbr="CET/CEST" data-lat="59.3293" data-lon="18.0686">
+            <h2>🇸🇪 Stockholm</h2>
+            <div class="time">--:--:--</div>
+            <div class="date">--</div>
+            <div class="timezone">CET / CEST</div>
+            <div class="weather">
+                <span class="weather-icon">--</span>
+                <span class="temperature">--°C</span>
+            </div>
+            <div class="sun-times">
+                <div class="sun-time">
+                    <span class="sun-label">Sunrise</span>
+                    <span class="sun-value sunrise">--</span>
+                </div>
+                <div class="sun-time">
+                    <span class="sun-label">Sunset</span>
+                    <span class="sun-value sunset">--</span>
+                </div>
+            </div>
+        </div>
+        <div class="clock-container" data-tz="Asia/Tokyo" data-locale="ja-JP" data-label="Tokyo" data-flag="🇯🇵" data-abbr="JST" data-lat="35.6762" data-lon="139.6503">
+            <h2>🇯🇵 Tokyo</h2>
+            <div class="time">--:--:--</div>
+            <div class="date">--</div>
+            <div class="timezone">JST</div>
+            <div class="weather">
+                <span class="weather-icon">--</span>
+                <span class="temperature">--°C</span>
+            </div>
+            <div class="sun-times">
+                <div class="sun-time">
+                    <span class="sun-label">Sunrise</span>
+                    <span class="sun-value sunrise">--</span>
+                </div>
+                <div class="sun-time">
+                    <span class="sun-label">Sunset</span>
+                    <span class="sun-value sunset">--</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateClocks() {
+            const now = new Date();
+            document.querySelectorAll('.clock-container').forEach(container => {
+                const tz = container.dataset.tz;
+                const locale = container.dataset.locale;
+
+                const timeStr = now.toLocaleTimeString(locale, {
+                    timeZone: tz,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+
+                const dateStr = now.toLocaleDateString(locale, {
+                    timeZone: tz,
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+
+                container.querySelector('.time').textContent = timeStr;
+                container.querySelector('.date').textContent = dateStr;
+            });
+        }
+
+        function getWeatherIcon(weatherCode) {
+            if (weatherCode === 0) return '☀️';
+            if (weatherCode >= 1 && weatherCode <= 3) return '🌤️';
+            if (weatherCode >= 45 && weatherCode <= 48) return '🌫️';
+            if (weatherCode >= 51 && weatherCode <= 57) return '🌧️';
+            if (weatherCode >= 61 && weatherCode <= 67) return '🌧️';
+            if (weatherCode >= 71 && weatherCode <= 77) return '🌨️';
+            if (weatherCode >= 80 && weatherCode <= 82) return '🌦️';
+            if (weatherCode >= 85 && weatherCode <= 86) return '🌨️';
+            if (weatherCode >= 95 && weatherCode <= 99) return '⛈️';
+            return '☁️';
+        }
+
+        async function fetchWeatherData(lat, lon) {
+            const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weathercode&daily=sunrise,sunset&timezone=auto`;
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error('Weather API failed');
+                return await response.json();
+            } catch (error) {
+                console.error('Error fetching weather:', error);
+                return null;
+            }
+        }
+
+        async function updateWeather() {
+            const containers = document.querySelectorAll('.clock-container');
+
+            for (const container of containers) {
+                const lat = container.dataset.lat;
+                const lon = container.dataset.lon;
+                const tz = container.dataset.tz;
+                const locale = container.dataset.locale;
+
+                const data = await fetchWeatherData(lat, lon);
+
+                if (data && data.current) {
+                    const temp = Math.round(data.current.temperature_2m);
+                    const weatherCode = data.current.weathercode;
+                    const icon = getWeatherIcon(weatherCode);
+
+                    container.querySelector('.weather-icon').textContent = icon;
+                    container.querySelector('.temperature').textContent = `${temp}°C`;
+
+                    if (data.daily && data.daily.sunrise && data.daily.sunset) {
+                        const sunrise = new Date(data.daily.sunrise[0]);
+                        const sunset = new Date(data.daily.sunset[0]);
+
+                        const sunriseStr = sunrise.toLocaleTimeString(locale, {
+                            timeZone: tz,
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        });
+
+                        const sunsetStr = sunset.toLocaleTimeString(locale, {
+                            timeZone: tz,
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        });
+
+                        container.querySelector('.sunrise').textContent = sunriseStr;
+                        container.querySelector('.sunset').textContent = sunsetStr;
+                    }
+                } else {
+                    container.querySelector('.weather-icon').textContent = '--';
+                    container.querySelector('.temperature').textContent = 'N/A';
+                    container.querySelector('.sunrise').textContent = '--';
+                    container.querySelector('.sunset').textContent = '--';
+                }
+            }
+        }
+
+        updateClocks();
+        setInterval(updateClocks, 1000);
+
+        updateWeather();
+        setInterval(updateWeather, 600000); // Update weather every 10 minutes
+    </script>
+</body>
+</html>
